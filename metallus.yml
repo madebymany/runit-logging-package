@@ -1,0 +1,15 @@
+software_groups: &software
+  - base
+
+jobs:
+  runit-logging:
+    builder: make
+    base: "ubuntu:12.04"
+    software_groups: *software
+    packages:
+      - name: runit-logging
+        target: false
+        depends:
+          - runit
+        repos:
+          - mxm

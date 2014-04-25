@@ -1,0 +1,16 @@
+#!/bin/sh
+
+[ "$1" = "configure" ] || exit
+
+set -e
+
+LOGGER_USER=logger
+LOGGER_HOME=/var/log/service
+
+if ! id ${LOGGER_USER} >/dev/null 2>&1; then
+  useradd --home "${LOGGER_HOME}" --user-group --system \
+    --shell /usr/sbin/nologin ${LOGGER_USER}
+fi
+mkdir -p "${LOGGER_HOME}"
+chown -R ${LOGGER_USER}:${LOGGER_USER} "${LOGGER_HOME}"
+find "${LOGGER_HOME}" -type d -exec chmod g+s "{}" \+
